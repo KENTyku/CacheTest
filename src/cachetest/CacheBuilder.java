@@ -4,6 +4,8 @@
  */
 package cachetest;
 
+import java.util.Map;
+
 /**
  *
  * @author kentyku
@@ -33,5 +35,11 @@ public class CacheBuilder {
     }
     void resetCash(){
         cache.resetStoreCache();
+    }
+    void showData(){
+        
+        for (Map.Entry<String, String> entry: cache.showCache().entrySet())
+    System.out.println(entry.getKey() + " = " + entry.getValue());
+
     }
 }

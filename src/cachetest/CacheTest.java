@@ -22,7 +22,8 @@ public class CacheTest {
         cache.addData("США", "Вашингтон");
         cache.getData("Италия");
         cache.addData("Япония", "Токио");
-        System.out.println(cache.getData("США"));
+//        System.out.println(cache.getData("США"));
+        cache.showData();
     }
     
 }

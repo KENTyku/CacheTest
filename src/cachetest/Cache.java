@@ -4,6 +4,8 @@
  */
 package cachetest;
 
+import java.util.LinkedHashMap;
+
 /**
  *
  * @author kentyku
@@ -21,6 +23,6 @@ abstract public class Cache {
 
     abstract void resetStoreCache();
     
-    abstract void showCache();
+    abstract LinkedHashMap<String, String> showCache();
 
 }
