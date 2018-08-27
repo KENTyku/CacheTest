@@ -14,7 +14,7 @@ public class CacheTest {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        CacheBuilder cache=new CacheBuilder("LRU",5);
+        CacheBuilder cache = new CacheBuilder("LRU", 5);
         cache.addData("Россия", "Ижевск");
         cache.addData("Англия", "Лондон");
         cache.addData("Италия", "Венеция");
@@ -22,8 +22,12 @@ public class CacheTest {
         cache.addData("США", "Вашингтон");
         cache.getData("Италия");
         cache.addData("Япония", "Токио");
-//        System.out.println(cache.getData("США"));
+        cache.addData("Франция", "Париж");
+        cache.showData();
+        System.out.println("Очистка");
+        cache.resetCash();
+        cache.addData("Украина", "Киев");
         cache.showData();
     }
-    
+
 }

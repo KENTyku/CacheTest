@@ -8,23 +8,25 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 
 /**
+ * Class implementing LRU-cache
  *
  * @author kentyku
  */
-public class AlgoritmLRU extends LinkedHashMap<String, String>{
-     private int maxEntries;
+public class AlgoritmLRU extends LinkedHashMap<String, String> {
+
+    private int maxEntries;
 
     /**
-     * Конструктор создаем как родительсткий с заданными значениями
-     * Начальную емкость отображения выбираем в 2 раза больше максимума 
-     * хранимых в кэше значений. Этим обеспечиваем быструю работу с
-     * отображением и невозможность увеличения размера отображения при 
-     * добавлении в него элементов.
-     * @param maxEntries 
+     * Конструктор создаем как родительсткий с заданными значениями Начальную
+     * емкость отображения выбираем в 2 раза больше максимума хранимых в кэше
+     * значений. Этим обеспечиваем быструю работу с отображением и невозможность
+     * увеличения размера отображения при добавлении в него элементов.
+     *
+     * @param maxEntries Размер кэша
      */
     AlgoritmLRU(int maxEntries) {
-        super(maxEntries*2, 0.75f, true);//как конструктор родителя 
-        this.maxEntries=maxEntries;
+        super(maxEntries * 2, 0.75f, true);//как конструктор родителя 
+        this.maxEntries = maxEntries;
     }
 
     /**
@@ -33,7 +35,7 @@ public class AlgoritmLRU extends LinkedHashMap<String, String>{
      * ложь). При переопределении добавлено условие, при котором метод
      * возвращает истину.
      *
-     * @param eldest
+     * @param eldest итератор 
      * @return
      */
     @Override
@@ -53,7 +55,6 @@ public class AlgoritmLRU extends LinkedHashMap<String, String>{
      */
     public void setMaxEntries(int maxEntries) {
         this.maxEntries = maxEntries;
-    }  
+    }
 
-    
 }
