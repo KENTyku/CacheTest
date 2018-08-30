@@ -17,6 +17,9 @@ abstract public class Cache {
     String key;
     String data;
     int size;
+    boolean isFileStore;
+
+    abstract void setTypeDataStore(boolean isFileStore);
 
     abstract void addData(String key, String data);
 

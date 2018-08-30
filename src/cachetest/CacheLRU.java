@@ -4,6 +4,7 @@
  */
 package cachetest;
 
+import java.io.Serializable;
 import java.util.LinkedHashMap;
 
 /**
@@ -11,7 +12,7 @@ import java.util.LinkedHashMap;
  *
  * @author kentyku
  */
-public class CacheLRU extends Cache {
+public class CacheLRU extends Cache implements Serializable {
 
     AlgoritmLRU lru;
 
@@ -23,6 +24,16 @@ public class CacheLRU extends Cache {
     public CacheLRU(int maxEntries) {
         this.size = maxEntries;
         this.lru = new AlgoritmLRU(size);
+    }
+
+    /**
+     * Set type of Data Store
+     *
+     * @param isFileStore
+     */
+    @Override
+    void setTypeDataStore(boolean isFileStore) {
+        this.isFileStore = isFileStore;
     }
 
     /**
