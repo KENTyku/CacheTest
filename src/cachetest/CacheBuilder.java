@@ -32,6 +32,9 @@ public class CacheBuilder {
             this.cache = new CasheLFU(size);
         }
     }
+    void setTypeDataStore(boolean isFileStore){
+        cache.setTypeDataStore(isFileStore);
+    }
 
     /**
      * Adding data to the cache

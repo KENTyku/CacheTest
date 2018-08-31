@@ -4,6 +4,8 @@
  */
 package cachetest;
 
+import java.io.FileInputStream;
+import java.io.ObjectInputStream;
 import java.io.Serializable;
 import java.util.LinkedHashMap;
 
@@ -24,6 +26,7 @@ public class CacheLRU extends Cache implements Serializable {
     public CacheLRU(int maxEntries) {
         this.size = maxEntries;
         this.lru = new AlgoritmLRU(size);
+        this.isFileStore = false;
     }
 
     /**
@@ -44,6 +47,19 @@ public class CacheLRU extends Cache implements Serializable {
      */
     @Override
     void addData(String key, String data) {
+
+        if (this.isFileStore) {
+            try {
+                FileInputStream fileForWrite = new FileInputStream("cache.data");
+                ObjectInputStream inStreamObject = new ObjectInputStream(fileForWrite);
+                if (this.lru.isEmpty()){
+                this.lru=(AlgoritmLRU)inStreamObject.readObject();
+                inStreamObject.close();
+                }
+            } catch (Exception e) {
+                System.out.println("Ошибка загрузки кэша из файла cache.data");
+            }
+        }
         lru.put(key, data);
     }
 
