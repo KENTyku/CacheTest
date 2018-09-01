@@ -14,19 +14,19 @@ import java.util.LinkedHashMap;
 abstract public class Cache {
 
     String type;
-    String key;
+    int key;
     String data;
     int size;
     boolean isFileStore;
 
     abstract void setTypeDataStore(boolean isFileStore);
 
-    abstract void addData(String key, String data);
+    abstract void addData(int key, String data);
 
-    abstract String getData(String key);
+    abstract String getData(int key);
 
     abstract void resetStoreCache();
 
-    abstract LinkedHashMap<String, String> showCache();
+    abstract LinkedHashMap<Integer, String> showCache();
 
 }

@@ -48,7 +48,7 @@ public class CacheBuilder {
      * @param key unique key
      * @param data value
      */
-    void addData(String key, String data) {
+    void addData(int key, String data) {
         cache.addData(key, data);
     }
 
@@ -58,7 +58,7 @@ public class CacheBuilder {
      * @param key unique key
      * @return
      */
-    String getData(String key) {
+    String getData(int key) {
         return cache.getData(key);
     }
 
@@ -74,7 +74,7 @@ public class CacheBuilder {
      */
     void showData() {
 
-        for (Map.Entry<String, String> entry : cache.showCache().entrySet()) {
+        for (Map.Entry<Integer, String> entry : cache.showCache().entrySet()) {
             System.out.println(entry.getKey() + " = " + entry.getValue());
         }
 

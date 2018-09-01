@@ -12,7 +12,7 @@ import java.util.Map;
  *
  * @author kentyku
  */
-public class AlgoritmLRU extends LinkedHashMap<String, String> {
+public class AlgoritmLRU extends LinkedHashMap<Integer, String> {
 
     private int maxEntries;
 
@@ -39,7 +39,7 @@ public class AlgoritmLRU extends LinkedHashMap<String, String> {
      * @return
      */
     @Override
-    protected boolean removeEldestEntry(Map.Entry<String, String> eldest) {
+    protected boolean removeEldestEntry(Map.Entry<Integer, String> eldest) {
         return size() > getMaxEntries();
     }
 

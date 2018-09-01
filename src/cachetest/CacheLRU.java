@@ -49,7 +49,7 @@ public class CacheLRU extends Cache implements Serializable {
      * @param data value
      */
     @Override
-    void addData(String key, String data) {
+    void addData(int key, String data) {
 
         if (this.isFileStore) {
             try {
@@ -81,7 +81,7 @@ public class CacheLRU extends Cache implements Serializable {
      * @return
      */
     @Override
-    String getData(String key) {
+    String getData(int key) {
         return lru.get(key);
     }
 
@@ -99,7 +99,7 @@ public class CacheLRU extends Cache implements Serializable {
      * @return
      */
     @Override
-    LinkedHashMap<String, String> showCache() {
+    LinkedHashMap<Integer, String> showCache() {
         return lru;
     }
 

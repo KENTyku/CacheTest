@@ -4,6 +4,11 @@
  */
 package cachetest;
 
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.util.LinkedHashMap;
 
 /**
@@ -13,13 +18,17 @@ import java.util.LinkedHashMap;
  */
 public class CasheLFU extends Cache {
 
+    AlgoritmLFU lfu;
+    
+
     /**
      * Constructor of class CacheLRU
      *
      * @param maxEntries Cashe size
      */
     CasheLFU(int maxEntries) {
-
+       
+        this.size=maxEntries;        
     }
 
     /**
@@ -29,8 +38,30 @@ public class CasheLFU extends Cache {
      * @param data value
      */
     @Override
-    void addData(String key, String data) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    void addData(int key, String data) {
+        lfu = new AlgoritmLFU(size);
+        if (this.isFileStore) {
+            try {
+                FileInputStream fileForRead = new FileInputStream("cache.data");
+                ObjectInputStream inStreamObject = new ObjectInputStream(fileForRead);
+                if (lfu.getCache().isEmpty()) {
+                    lfu = (AlgoritmLFU) inStreamObject.readObject();
+                    inStreamObject.close();
+                }
+            } catch (Exception e) {
+                System.out.println("Ошибка загрузки кэша из файла cache.data");
+            }
+        }
+        lfu.addCacheEntry(key, data);
+        try {
+            FileOutputStream fileForWrite = new FileOutputStream("cache.data");
+            ObjectOutputStream outStreamObject = new ObjectOutputStream(fileForWrite);
+            outStreamObject.writeObject(lfu);
+            outStreamObject.close();
+        } catch (IOException e) {
+            System.out.println("Ошибка выгрузки кэша в файл cache.data");
+        }
+
     }
 
     /**
@@ -40,8 +71,8 @@ public class CasheLFU extends Cache {
      * @return
      */
     @Override
-    String getData(String key) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    String getData(int key) {
+        return lfu.getCacheEntry(key);
     }
 
     /**
@@ -49,7 +80,7 @@ public class CasheLFU extends Cache {
      */
     @Override
     void resetStoreCache() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+//       lfu.get
     }
 
     /**
@@ -58,7 +89,7 @@ public class CasheLFU extends Cache {
      * @return
      */
     @Override
-    LinkedHashMap<String, String> showCache() {
+    LinkedHashMap<Integer, String> showCache() {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
