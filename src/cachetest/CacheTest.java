@@ -15,6 +15,7 @@ public class CacheTest {
      */
     public static void main(String[] args) {
         CacheBuilder cache = new CacheBuilder("LRU", 5);
+        cache.setTypeDataStore(true);
         cache.addData("Россия", "Ижевск");
         cache.addData("Англия", "Лондон");
         cache.addData("Италия", "Венеция");
@@ -24,6 +25,10 @@ public class CacheTest {
         cache.addData("Япония", "Токио");
         cache.addData("Франция", "Париж");
         cache.showData();
+//        System.out.println("Очистка");
+//        cache.resetCash();
+//        cache.addData("Украина", "Киев");
+//        cache.showData();
         System.out.println("Очистка");
         cache.resetCash();
         cache.addData("Украина", "Киев");

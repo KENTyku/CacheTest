@@ -32,7 +32,13 @@ public class CacheBuilder {
             this.cache = new CasheLFU(size);
         }
     }
-    void setTypeDataStore(boolean isFileStore){
+
+    /**
+     * set type of DataStore for cache.
+     *
+     * @param isFileStore true-use HDD. false-use RAM(is defaul).
+     */
+    void setTypeDataStore(boolean isFileStore) {
         cache.setTypeDataStore(isFileStore);
     }
 

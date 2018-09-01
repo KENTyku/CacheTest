@@ -5,7 +5,10 @@
 package cachetest;
 
 import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.io.Serializable;
 import java.util.LinkedHashMap;
 
@@ -50,8 +53,8 @@ public class CacheLRU extends Cache implements Serializable {
 
         if (this.isFileStore) {
             try {
-                FileInputStream fileForWrite = new FileInputStream("cache.data");
-                ObjectInputStream inStreamObject = new ObjectInputStream(fileForWrite);
+                FileInputStream fileForRead = new FileInputStream("cache.data");
+                ObjectInputStream inStreamObject = new ObjectInputStream(fileForRead);
                 if (this.lru.isEmpty()){
                 this.lru=(AlgoritmLRU)inStreamObject.readObject();
                 inStreamObject.close();
@@ -61,6 +64,14 @@ public class CacheLRU extends Cache implements Serializable {
             }
         }
         lru.put(key, data);
+        try {
+            FileOutputStream fileForWrite =new FileOutputStream("cache.data");
+            ObjectOutputStream outStreamObject=new ObjectOutputStream(fileForWrite);
+            outStreamObject.writeObject(this.lru);
+            outStreamObject.close();
+        } catch (IOException e) {
+             System.out.println("Ошибка выгрузки кэша в файл cache.data");
+        }
     }
 
     /**
