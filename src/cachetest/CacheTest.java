@@ -14,7 +14,7 @@ public class CacheTest {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        CacheBuilder cache = new CacheBuilder("LRU", 5);
+        CacheBuilder cache = new CacheBuilder("LFU", 10);
         cache.setTypeDataStore(true);
         cache.addData(1, "Ижевск");
         cache.addData(2, "Лондон");

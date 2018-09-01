@@ -19,7 +19,6 @@ import java.util.LinkedHashMap;
 public class CasheLFU extends Cache {
 
     AlgoritmLFU lfu;
-    
 
     /**
      * Constructor of class CacheLRU
@@ -27,8 +26,8 @@ public class CasheLFU extends Cache {
      * @param maxEntries Cashe size
      */
     CasheLFU(int maxEntries) {
-       
-        this.size=maxEntries;        
+        this.isFileStore = false;
+        this.size = maxEntries;
     }
 
     /**
@@ -80,7 +79,7 @@ public class CasheLFU extends Cache {
      */
     @Override
     void resetStoreCache() {
-//       lfu.get
+        lfu.getCache().clear();
     }
 
     /**
@@ -90,12 +89,12 @@ public class CasheLFU extends Cache {
      */
     @Override
     LinkedHashMap<Integer, String> showCache() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return lfu.getCache();
     }
 
     @Override
     void setTypeDataStore(boolean isFileStore) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        this.isFileStore = isFileStore;
     }
 
 }

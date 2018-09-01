@@ -12,10 +12,11 @@ import java.util.Map;
  * @author kentyku
  */
 public class AlgoritmLFU {
-  private int maxEntries;
-    
+
+    private final int maxEntries;
+
     /**
-     * 
+     *
      */
     class CacheEntry {
 
@@ -44,8 +45,6 @@ public class AlgoritmLFU {
 
     }
 
-    
-
     private static LinkedHashMap<Integer, CacheEntry> cache = new LinkedHashMap<Integer, CacheEntry>();
 
     /* LinkedHashMap is used because it has features of both HashMap and LinkedList. 
@@ -61,16 +60,16 @@ public class AlgoritmLFU {
             temp.setData(data);
             temp.setFrequency(0);
 
-            getCache().put(key, temp);
+            cache.put(key, temp);
         } else {
             int entryKeyToBeRemoved = getLFUKey();
-            getCache().remove(entryKeyToBeRemoved);
+            cache.remove(entryKeyToBeRemoved);
 
             CacheEntry temp = new CacheEntry();
             temp.setData(data);
             temp.setFrequency(0);
 
-            getCache().put(key, temp);
+            cache.put(key, temp);
         }
     }
 
@@ -78,7 +77,7 @@ public class AlgoritmLFU {
         int key = 0;
         int minFreq = Integer.MAX_VALUE;
 
-        for (Map.Entry<Integer, CacheEntry> entry : getCache().entrySet()) {
+        for (Map.Entry<Integer, CacheEntry> entry : cache.entrySet()) {
             if (minFreq > entry.getValue().frequency) {
                 key = entry.getKey();
                 minFreq = entry.getValue().frequency;
@@ -89,18 +88,18 @@ public class AlgoritmLFU {
     }
 
     public String getCacheEntry(int key) {
-        if (getCache().containsKey(key)) // cache hit
+        if (cache.containsKey(key)) // cache hit
         {
-            CacheEntry temp = getCache().get(key);
+            CacheEntry temp = cache.get(key);
             temp.frequency++;
-            getCache().put(key, temp);
+            cache.put(key, temp);
             return temp.data;
         }
         return null; // cache miss
     }
 
-    public  boolean isFull() {
-        if (getCache().size() == maxEntries) {
+    public boolean isFull() {
+        if (cache.size() == maxEntries) {
             return true;
         }
 
@@ -110,8 +109,13 @@ public class AlgoritmLFU {
     /**
      * @return the cache
      */
-    public static LinkedHashMap<Integer, CacheEntry> getCache() {
-        return cache;
+    public static LinkedHashMap<Integer, String> getCache() {
+        LinkedHashMap<Integer, String> cacheTemp = new LinkedHashMap<Integer, String>();
+
+        for (Map.Entry<Integer, CacheEntry> entry : cache.entrySet()) {
+            cacheTemp.put(entry.getKey(), entry.getValue().getData());
+        }
+        return cacheTemp;
     }
 
     /**
