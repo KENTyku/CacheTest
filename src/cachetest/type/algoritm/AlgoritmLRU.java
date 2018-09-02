@@ -2,7 +2,7 @@
  * Use and copying for commercial purposes
  * only with the author's permission
  */
-package cachetest;
+package cachetest.type.algoritm;
 
 import java.util.LinkedHashMap;
 import java.util.Map;
@@ -24,7 +24,7 @@ public class AlgoritmLRU extends LinkedHashMap<Integer, String> {
      *
      * @param maxEntries Размер кэша
      */
-    AlgoritmLRU(int maxEntries) {
+    public AlgoritmLRU(int maxEntries) {
         super(maxEntries * 2, 0.75f, true);//как конструктор родителя 
         this.maxEntries = maxEntries;
     }

@@ -4,6 +4,9 @@
  */
 package cachetest;
 
+import cachetest.type.CasheLFU;
+import cachetest.type.CacheLRU;
+import cachetest.type.Cache;
 import java.util.Map;
 
 /**

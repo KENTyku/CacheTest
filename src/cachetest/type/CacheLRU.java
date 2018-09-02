@@ -2,32 +2,45 @@
  * Use and copying for commercial purposes
  * only with the author's permission
  */
-package cachetest;
+package cachetest.type;
 
+import cachetest.type.algoritm.AlgoritmLRU;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.io.Serializable;
 import java.util.LinkedHashMap;
 
 /**
- * Class describing the creation of an LFU cache
+ * Class describing the creation of an LRU cache
  *
  * @author kentyku
  */
-public class CasheLFU extends Cache {
+public class CacheLRU extends Cache implements Serializable {
 
-    AlgoritmLFU lfu;
+    AlgoritmLRU lru;
 
     /**
      * Constructor of class CacheLRU
      *
-     * @param maxEntries Cashe size
+     * @param maxEntries cache size
      */
-    CasheLFU(int maxEntries) {
-        this.isFileStore = false;
+    public CacheLRU(int maxEntries) {
         this.size = maxEntries;
+        this.lru = new AlgoritmLRU(size);
+        this.isFileStore = false;
+    }
+
+    /**
+     * Set type of Data Store
+     *
+     * @param isFileStore
+     */
+    @Override
+    public void setTypeDataStore(boolean isFileStore) {
+        this.isFileStore = isFileStore;
     }
 
     /**
@@ -37,30 +50,29 @@ public class CasheLFU extends Cache {
      * @param data value
      */
     @Override
-    void addData(int key, String data) {
-        lfu = new AlgoritmLFU(size);
+    public void addData(int key, String data) {
+
         if (this.isFileStore) {
             try {
                 FileInputStream fileForRead = new FileInputStream("cache.data");
                 ObjectInputStream inStreamObject = new ObjectInputStream(fileForRead);
-                if (lfu.getCache().isEmpty()) {
-                    lfu = (AlgoritmLFU) inStreamObject.readObject();
-                    inStreamObject.close();
+                if (this.lru.isEmpty()){
+                this.lru=(AlgoritmLRU)inStreamObject.readObject();
+                inStreamObject.close();
                 }
             } catch (Exception e) {
                 System.out.println("Ошибка загрузки кэша из файла cache.data");
             }
         }
-        lfu.addCacheEntry(key, data);
+        lru.put(key, data);
         try {
-            FileOutputStream fileForWrite = new FileOutputStream("cache.data");
-            ObjectOutputStream outStreamObject = new ObjectOutputStream(fileForWrite);
-            outStreamObject.writeObject(lfu);
+            FileOutputStream fileForWrite =new FileOutputStream("cache.data");
+            ObjectOutputStream outStreamObject=new ObjectOutputStream(fileForWrite);
+            outStreamObject.writeObject(this.lru);
             outStreamObject.close();
         } catch (IOException e) {
-            System.out.println("Ошибка выгрузки кэша в файл cache.data");
+             System.out.println("Ошибка выгрузки кэша в файл cache.data");
         }
-
     }
 
     /**
@@ -70,16 +82,16 @@ public class CasheLFU extends Cache {
      * @return
      */
     @Override
-    String getData(int key) {
-        return lfu.getCacheEntry(key);
+    public String getData(int key) {
+        return lru.get(key);
     }
 
     /**
      * Reset cache
      */
     @Override
-    void resetStoreCache() {
-        lfu.getCache().clear();
+    public void resetStoreCache() {
+        lru.clear();
     }
 
     /**
@@ -88,13 +100,8 @@ public class CasheLFU extends Cache {
      * @return
      */
     @Override
-    LinkedHashMap<Integer, String> showCache() {
-        return lfu.getCache();
-    }
-
-    @Override
-    void setTypeDataStore(boolean isFileStore) {
-        this.isFileStore = isFileStore;
+    public LinkedHashMap<Integer, String> showCache() {
+        return lru;
     }
 
 }
