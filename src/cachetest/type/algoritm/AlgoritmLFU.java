@@ -13,20 +13,18 @@ import java.util.Map;
  * @author kentyku
  */
 public class AlgoritmLFU {
-    transient CacheEntryLFU temp;
+
+    public CacheEntryLFU temp;
     private final int maxEntries;
     private LinkedHashMap<Integer, CacheEntryLFU> cache = new LinkedHashMap<Integer, CacheEntryLFU>();
 
-    /* LinkedHashMap is used because it has features of both HashMap and LinkedList. 
-     * Thus, we can get an entry in O(1) and also, we can iterate over it easily.
-     * */
     public AlgoritmLFU(int maxEntries) {
         this.maxEntries = maxEntries;
     }
 
     public void addCacheEntry(int key, String data) {
         if (!isFull()) {
-            temp = new CacheEntryLFU();
+            CacheEntryLFU temp = new CacheEntryLFU();
             temp.setData(data);
             temp.setFrequency(0);
 
@@ -35,7 +33,7 @@ public class AlgoritmLFU {
             int entryKeyToBeRemoved = getLFUKey();
             cache.remove(entryKeyToBeRemoved);
 
-            temp = new CacheEntryLFU();
+            CacheEntryLFU temp = new CacheEntryLFU();
             temp.setData(data);
             temp.setFrequency(0);
 
@@ -61,7 +59,7 @@ public class AlgoritmLFU {
         if (cache.containsKey(key)) // cache hit
         {
             CacheEntryLFU temp = cache.get(key);
-            temp.setFrequency(temp.getFrequency()+1);
+            temp.setFrequency(temp.getFrequency() + 1);
             cache.put(key, temp);
             return temp.getData();
         }
@@ -79,19 +77,14 @@ public class AlgoritmLFU {
     /**
      * @return the cache
      */
-    public  LinkedHashMap<Integer, String> getCache() {
-        LinkedHashMap<Integer, String> cacheTemp = new LinkedHashMap<Integer, String>();
-
-        for (Map.Entry<Integer, CacheEntryLFU> entry : cache.entrySet()) {
-            cacheTemp.put(entry.getKey(), entry.getValue().getData());
-        }
-        return cacheTemp;
+    public LinkedHashMap<Integer, CacheEntryLFU> getCache() {
+        return cache;
     }
 
     /**
      * @param aCache the cache to set
      */
-    public  void setCache(LinkedHashMap<Integer, CacheEntryLFU> aCache) {
+    public void setCache(LinkedHashMap<Integer, CacheEntryLFU> aCache) {
         cache = aCache;
     }
 }

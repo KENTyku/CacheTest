@@ -5,6 +5,7 @@
 package cachetest.type;
 
 import cachetest.type.algoritm.AlgoritmLFU;
+import cachetest.type.algoritm.CacheEntryLFU;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -12,6 +13,7 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.Serializable;
 import java.util.LinkedHashMap;
+import java.util.Map;
 
 /**
  * Class describing the creation of an LFU cache
@@ -46,23 +48,26 @@ public class CasheLFU extends Cache implements Serializable {
                 FileInputStream fileForRead = new FileInputStream("cache.data");
                 ObjectInputStream inStreamObject = new ObjectInputStream(fileForRead);
                 if (this.lfu.getCache().isEmpty()) {
-                    this.lfu = (AlgoritmLFU) inStreamObject.readObject();
+                    LinkedHashMap<Integer, CacheEntryLFU> cache = (LinkedHashMap<Integer, CacheEntryLFU>) inStreamObject.readObject();
+                    this.lfu.setCache(cache);
                     inStreamObject.close();
                 }
             } catch (Exception e) {
-                System.out.println("Ошибка загрузки кэша из файла cache.data");
+                System.out.println("Ошибка загрузки кэша из файла cacheLfu.data");
             }
-        }
-        this.lfu.addCacheEntry(key, data);
-        try {
-            FileOutputStream fileForWrite = new FileOutputStream("cache.data");
-            ObjectOutputStream outStreamObject = new ObjectOutputStream(fileForWrite);
 
-            outStreamObject.writeObject(this.lfu);
-            outStreamObject.close();
-        } catch (IOException e) {
-            System.out.println("Ошибка выгрузки кэша в файл cache.data");
+            this.lfu.addCacheEntry(key, data);
+            try {
+                FileOutputStream fileForWrite = new FileOutputStream("cacheLfu.data");
+                ObjectOutputStream outStreamObject = new ObjectOutputStream(fileForWrite);
+                outStreamObject.writeObject(this.lfu.getCache());
+                outStreamObject.close();
+            } catch (IOException e) {
+                System.out.println("Ошибка выгрузки кэша в файл cacheLfu.data");
 //            e.printStackTrace();
+            }
+        } else {
+            this.lfu.addCacheEntry(key, data);
         }
 
     }
@@ -93,7 +98,11 @@ public class CasheLFU extends Cache implements Serializable {
      */
     @Override
     public LinkedHashMap<Integer, String> showCache() {
-        return lfu.getCache();
+        LinkedHashMap<Integer, String> cacheTemp = new LinkedHashMap<Integer, String>();       
+        for (Map.Entry<Integer, CacheEntryLFU> entry : lfu.getCache().entrySet()) {
+            cacheTemp.put(entry.getKey(), entry.getValue().getData());
+        }
+        return cacheTemp;        
     }
 
     @Override

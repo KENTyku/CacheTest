@@ -54,24 +54,26 @@ public class CacheLRU extends Cache implements Serializable {
 
         if (this.isFileStore) {
             try {
-                FileInputStream fileForRead = new FileInputStream("cache.data");
+                FileInputStream fileForRead = new FileInputStream("cacheLru.data");
                 ObjectInputStream inStreamObject = new ObjectInputStream(fileForRead);
-                if (this.lru.isEmpty()){
-                this.lru=(AlgoritmLRU)inStreamObject.readObject();
-                inStreamObject.close();
+                if (this.lru.size() == 0) {
+                    this.lru = (AlgoritmLRU) inStreamObject.readObject();
+                    inStreamObject.close();
                 }
             } catch (Exception e) {
-                System.out.println("Ошибка загрузки кэша из файла cache.data");
+                System.out.println("Ошибка загрузки кэша из файла cacheLru.data");
             }
-        }
-        lru.put(key, data);
-        try {
-            FileOutputStream fileForWrite =new FileOutputStream("cache.data");
-            ObjectOutputStream outStreamObject=new ObjectOutputStream(fileForWrite);
-            outStreamObject.writeObject(this.lru);
-            outStreamObject.close();
-        } catch (IOException e) {
-             System.out.println("Ошибка выгрузки кэша в файл cache.data");
+            lru.put(key, data);
+            try {
+                FileOutputStream fileForWrite = new FileOutputStream("cacheLru.data");
+                ObjectOutputStream outStreamObject = new ObjectOutputStream(fileForWrite);
+                outStreamObject.writeObject(this.lru);
+                outStreamObject.close();
+            } catch (IOException e) {
+                System.out.println("Ошибка выгрузки кэша в файл cache.data");
+            }
+        } else {
+            lru.put(key, data);
         }
     }
 
