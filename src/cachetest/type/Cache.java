@@ -13,11 +13,11 @@ import java.util.LinkedHashMap;
  */
 abstract public class Cache {
 
-    String type;
-    int key;
-    String data;
-    int size;
-    boolean isFileStore;
+    protected String type;
+    protected int key;
+    protected String data;
+    protected int size;
+    protected boolean isFileStore;
 
     abstract public void setTypeDataStore(boolean isFileStore);
 

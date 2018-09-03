@@ -11,6 +11,7 @@ package cachetest;
 public class CacheTest {
 
     /**
+     * Use for test.
      * @param args the command line arguments
      */
     public static void main(String[] args) {
@@ -44,7 +45,7 @@ public class CacheTest {
         cacheLFU.addData(6, "Токио");
         cacheLFU.addData(7, "Париж");
         cacheLFU.showData();
-        System.out.println("Очистка");
+        System.out.println("Очистка из оперативной памяти");
         cacheLFU.resetCash();
         cacheLFU.addData(8, "Киев");
         cacheLFU.showData();

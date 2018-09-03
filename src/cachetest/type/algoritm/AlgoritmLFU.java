@@ -9,26 +9,37 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 
 /**
+ * Class implementing LFU-cache
  *
  * @author kentyku
  */
-public class AlgoritmLFU {
+public class AlgoritmLFU implements Serializable {
 
-    public CacheEntryLFU temp;
-    private final int maxEntries;
+    private int maxEntries;
     private LinkedHashMap<Integer, CacheEntryLFU> cache = new LinkedHashMap<Integer, CacheEntryLFU>();
 
+    /**
+     * Constructor
+     *
+     * @param maxEntries It is size cache.
+     */
     public AlgoritmLFU(int maxEntries) {
         this.maxEntries = maxEntries;
     }
 
+    /**
+     * Adding data to cache
+     *
+     * @param key
+     * @param data
+     */
     public void addCacheEntry(int key, String data) {
         if (!isFull()) {
-            CacheEntryLFU temp = new CacheEntryLFU();
-            temp.setData(data);
-            temp.setFrequency(0);
+            CacheEntryLFU temp1 = new CacheEntryLFU();
+            temp1.setData(data);
+            temp1.setFrequency(0);
 
-            cache.put(key, temp);
+            cache.put(key, temp1);
         } else {
             int entryKeyToBeRemoved = getLFUKey();
             cache.remove(entryKeyToBeRemoved);
@@ -41,7 +52,12 @@ public class AlgoritmLFU {
         }
     }
 
-    public int getLFUKey() {
+    /**
+     * Returns the index of the least frequently used value
+     *
+     * @return
+     */
+    private int getLFUKey() {
         int key = 0;
         int minFreq = Integer.MAX_VALUE;
 
@@ -55,6 +71,12 @@ public class AlgoritmLFU {
         return key;
     }
 
+    /**
+     * Returns data from cache
+     *
+     * @param key
+     * @return
+     */
     public String getCacheEntry(int key) {
         if (cache.containsKey(key)) // cache hit
         {
@@ -66,7 +88,12 @@ public class AlgoritmLFU {
         return null; // cache miss
     }
 
-    public boolean isFull() {
+    /**
+     * Check whether the cache is full or not
+     *
+     * @return
+     */
+    private boolean isFull() {
         if (cache.size() == maxEntries) {
             return true;
         }

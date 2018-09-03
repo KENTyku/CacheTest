@@ -20,7 +20,7 @@ import java.util.LinkedHashMap;
  */
 public class CacheLRU extends Cache implements Serializable {
 
-    AlgoritmLRU lru;
+    private AlgoritmLRU lru;
 
     /**
      * Constructor of class CacheLRU
@@ -70,7 +70,7 @@ public class CacheLRU extends Cache implements Serializable {
                 outStreamObject.writeObject(this.lru);
                 outStreamObject.close();
             } catch (IOException e) {
-                System.out.println("Ошибка выгрузки кэша в файл cache.data");
+                System.out.println("Ошибка выгрузки кэша в файл cacheLru.data");
             }
         } else {
             lru.put(key, data);
