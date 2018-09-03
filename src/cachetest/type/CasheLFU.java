@@ -75,7 +75,7 @@ public class CasheLFU extends Cache implements Serializable {
      * Getting data from the cache by key
      *
      * @param key unique key
-     * @return
+     * @return data from the cache by key
      */
     @Override
     public String getData(int key) {
@@ -93,7 +93,7 @@ public class CasheLFU extends Cache implements Serializable {
     /**
      * View values ​​in the cache
      *
-     * @return
+     * @return values in the cache
      */
     @Override
     public LinkedHashMap<Integer, String> showCache() {

@@ -30,8 +30,8 @@ public class AlgoritmLFU implements Serializable {
     /**
      * Adding data to cache
      *
-     * @param key
-     * @param data
+     * @param key  for etem cache
+     * @param data for etem cache
      */
     public void addCacheEntry(int key, String data) {
         if (!isFull()) {
@@ -74,8 +74,8 @@ public class AlgoritmLFU implements Serializable {
     /**
      * Returns data from cache
      *
-     * @param key
-     * @return
+     * @param key for etem chache
+     * @return entry for cache with frequency marker
      */
     public String getCacheEntry(int key) {
         if (cache.containsKey(key)) // cache hit

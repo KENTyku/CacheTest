@@ -36,7 +36,7 @@ public class CacheLRU extends Cache implements Serializable {
     /**
      * Set type of Data Store
      *
-     * @param isFileStore
+     * @param isFileStore Type of DataStore
      */
     @Override
     public void setTypeDataStore(boolean isFileStore) {
@@ -81,7 +81,7 @@ public class CacheLRU extends Cache implements Serializable {
      * Getting data from the cache by key
      *
      * @param key unique key
-     * @return
+     * @return Value of cache with key
      */
     @Override
     public String getData(int key) {
@@ -99,7 +99,7 @@ public class CacheLRU extends Cache implements Serializable {
     /**
      * View values ​​in the cache
      *
-     * @return
+     * @return Map of etems cache
      */
     @Override
     public LinkedHashMap<Integer, String> showCache() {

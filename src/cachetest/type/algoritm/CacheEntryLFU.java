@@ -23,36 +23,36 @@ public class CacheEntryLFU implements Serializable {
     }
 
     /**
-     * Get value for etem cache
+     * Get value for entry cache
      *
-     * @return
+     * @return value for entry cache
      */
     public String getData() {
         return data;
     }
 
     /**
-     * Set value for etem cache
+     * Set value for entry cache
      *
-     * @param data
+     * @param data value for entry cache
      */
     public void setData(String data) {
         this.data = data;
     }
 
     /**
-     * Get frequency etem cache
+     * Get frequency of entry cache
      *
-     * @return
+     * @return frequency of entry cache
      */
     public int getFrequency() {
         return frequency;
     }
 
     /**
-     * Set frequency etem cache
+     * Set frequency entry cache
      *
-     * @param frequency
+     * @param frequency of entry cache
      */
     public void setFrequency(int frequency) {
         this.frequency = frequency;

@@ -36,7 +36,7 @@ public class AlgoritmLRU extends LinkedHashMap<Integer, String> {
      * возвращает истину.
      *
      * @param eldest итератор 
-     * @return
+     * @return is remove eldest entry
      */
     @Override
     protected boolean removeEldestEntry(Map.Entry<Integer, String> eldest) {
