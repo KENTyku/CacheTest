@@ -35,11 +35,11 @@ public class AlgoritmLFU implements Serializable {
      */
     public void addCacheEntry(int key, String data) {
         if (!isFull()) {
-            CacheEntryLFU temp1 = new CacheEntryLFU();
-            temp1.setData(data);
-            temp1.setFrequency(0);
+            CacheEntryLFU temp = new CacheEntryLFU();
+            temp.setData(data);
+            temp.setFrequency(0);
 
-            cache.put(key, temp1);
+            cache.put(key, temp);
         } else {
             int entryKeyToBeRemoved = getLFUKey();
             cache.remove(entryKeyToBeRemoved);

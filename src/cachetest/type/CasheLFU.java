@@ -32,6 +32,7 @@ public class CasheLFU extends Cache implements Serializable {
     public CasheLFU(int maxEntries) {
         this.isFileStore = false;
         this.size = maxEntries;
+        this.lfu=new AlgoritmLFU(maxEntries);
     }
 
     /**
@@ -43,30 +44,30 @@ public class CasheLFU extends Cache implements Serializable {
      */
     @Override
     public void addData(int key, String data) {
+//        lfu = new AlgoritmLFU(this.size);
         if (this.isFileStore) {
-            try {
-                lfu = new AlgoritmLFU(this.size);
+            try {                
                 FileInputStream fileForRead = new FileInputStream("cacheLfu.data");
                 ObjectInputStream inStreamObject = new ObjectInputStream(fileForRead);
-                if (lfu.getCache().isEmpty()) {
-                    lfu = (AlgoritmLFU) inStreamObject.readObject();
+                if (this.lfu.getCache().isEmpty()) {
+                    this.lfu = (AlgoritmLFU) inStreamObject.readObject();
                     inStreamObject.close();
                 }
             } catch (Exception e) {
                 System.out.println("Ошибка загрузки кэша из файла cacheLfu.data");
             }
 
-            lfu.addCacheEntry(key, data);
+            this.lfu.addCacheEntry(key, data);
             try {
                 FileOutputStream fileForWrite = new FileOutputStream("cacheLfu.data");
                 ObjectOutputStream outStreamObject = new ObjectOutputStream(fileForWrite);
-                outStreamObject.writeObject(lfu);
+                outStreamObject.writeObject(this.lfu);
                 outStreamObject.close();
             } catch (IOException e) {
                 System.out.println("Ошибка выгрузки кэша в файл cacheLfu.data");
             }
         } else {
-            lfu.addCacheEntry(key, data);
+            this.lfu.addCacheEntry(key, data);
         }
 
     }
@@ -79,7 +80,7 @@ public class CasheLFU extends Cache implements Serializable {
      */
     @Override
     public String getData(int key) {
-        return lfu.getCacheEntry(key);
+        return this.lfu.getCacheEntry(key);
     }
 
     /**
@@ -87,7 +88,7 @@ public class CasheLFU extends Cache implements Serializable {
      */
     @Override
     public void resetStoreCache() {
-        lfu.getCache().clear();
+        this.lfu.getCache().clear();
     }
 
     /**
@@ -98,7 +99,7 @@ public class CasheLFU extends Cache implements Serializable {
     @Override
     public LinkedHashMap<Integer, String> showCache() {
         LinkedHashMap<Integer, String> cacheTemp = new LinkedHashMap<Integer, String>();
-        for (Map.Entry<Integer, CacheEntryLFU> entry : lfu.getCache().entrySet()) {
+        for (Map.Entry<Integer, CacheEntryLFU> entry : this.lfu.getCache().entrySet()) {
             cacheTemp.put(entry.getKey(), entry.getValue().getData());
         }
         return cacheTemp;
